@@ -9,9 +9,7 @@ class UserController
 {
     public function index()
     {
-        $user = new User();
-
-        View::make('index', ['users' => $user->getAll()]);
+        View::make('index');
     }
 
     public function store()

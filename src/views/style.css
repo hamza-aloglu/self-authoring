@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+
+}
+
+#container {
+    position: relative;
+}
+
+#container textarea {
+    border-radius: 0;
+    resize: none;
+}
+
+#dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#dropdown button {
+    border: none;
+}
+
+#login_view, #register_view {
+    box-shadow: 0px 0px 1000px 100px grey !important;
+    border-radius: 5px;
+    background-color: lightgray;
+}
+
+#register_view {
+}
+
+#login_view #register_button {
+    color: #0d6efd;;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.centered-axis-xy {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
