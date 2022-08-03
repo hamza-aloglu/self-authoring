@@ -2,10 +2,11 @@
 
 namespace app;
 
+use PDO;
+
 class Database
 {
-
-    public PDO $db;
+    private PDO $db;
 
     public function __construct()
     {
@@ -13,6 +14,11 @@ class Database
         // set the PDO error mode to exception
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         echo "Connected successfully";
+    }
+
+    public function getDB(): PDO
+    {
+        return $this->db;
     }
 
 }

@@ -8,6 +8,24 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>hello world</h2>
+<h4>
+    <?php
+    if (isset($users)) {
+        foreach ($users as $user)
+        {
+            echo "<pre>";
+            var_dump($user);
+            echo "</pre>";
+            echo "<br>";
+        }
+    }
+    ?>
+</h4>
+
+<form action="/self-authoring/store" method="post">
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <input type="submit">
+</form>
 </body>
 </html>

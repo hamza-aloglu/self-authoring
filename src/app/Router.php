@@ -24,6 +24,7 @@ class Router
 
     public function run(string $requestURI, string $requestMethod)
     {
+        $requestMethod = strtolower($requestMethod);
         $url = explode("?", $requestURI)[0];
         if ($action = $this->routes[$requestMethod][$url]) {
 

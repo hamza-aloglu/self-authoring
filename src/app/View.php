@@ -4,7 +4,7 @@ namespace app;
 
 class View
 {
-    public static function make(string $fileName, array $attributes)
+    public static function make(string $fileName, array $attributes = [])
     {
         $fullFileName = __DIR__ . '/../views/' . $fileName . '.php';
 
