@@ -6,6 +6,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/app" isTestSource="false" packagePrefix="app\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/paragonie/sodium_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/firebase" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/paragonie" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -26,8 +26,8 @@ class Router
     {
         $requestMethod = strtolower($requestMethod);
         $url = explode("?", $requestURI)[0];
-        if ($action = $this->routes[$requestMethod][$url]) {
-
+        if (isset($this->routes[$requestMethod][$url])) {
+            $action = $this->routes[$requestMethod][$url];
             if (is_callable($action)) {
                return call_user_func($action);
             }
