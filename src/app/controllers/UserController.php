@@ -5,14 +5,12 @@ namespace app\controllers;
 use app\View;
 use app\models\User;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
 
 class UserController
 {
-    public function index()
+    public function index(array $attributes = null)
     {
-        View::make('index');
+        View::make('index', ['attributes' => $attributes]);
     }
 
     public function registerUser()
@@ -42,14 +40,36 @@ class UserController
         ];
 
         $jwt = JWT::encode($payload, $key, 'HS256');
-        $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        // $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
         // save encrypted token in local storage of client.
-        View::make('index', ['token' => $jwt]);
+        $this->index(['token' => $jwt]);
     }
 
     public function logoutUser()
     {
-        View::make('index', ['logout' => true]);
+        $this->index(['logout' => true]);
+    }
+
+
+    public function test()
+    {
+        echo "test...";
+    }
+
+    public function isValidJWT()
+    {
+        sleep(10);
+
+        if (empty($_POST)) {
+            $_POST = json_decode(file_get_contents('php://input', true));
+        }
+
+        // decode jwt
+        // check if it is valid
+        // response true or false.
+
+
+        echo json_encode($_POST);
     }
 }

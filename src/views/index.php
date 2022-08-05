@@ -14,13 +14,13 @@
 <body>
 
 
-
 <div class="form-floating h-100" id="container">
     <textarea class="form-control bg-light h-100" id="text"></textarea>
 
     <!-- 3 DOTS DROPDOWN -->
     <div class="dropdown bg-light" id="dropdown">
-        <button class="btn btn-secondary bg-light text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary bg-light text-dark" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
             <i class="fa-solid fa-ellipsis-vertical"></i>
         </button>
         <ul class="dropdown-menu" id="menu">
@@ -37,7 +37,9 @@
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="user-password">
-                <div class="form-text"><div id="register_button">register?</div></div>
+                <div class="form-text">
+                    <div id="register_button">register?</div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -67,21 +69,63 @@
 
 
 <script>
+    async function validateJWT()
+    {
+        const userToken = localStorage.getItem('token');
+
+        let response = await fetch('http://localhost/self-authoring/isValidJWT', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(userToken)
+        });
+        return await response.json();
+    }
+
+    // after logging in, there is still login button unless you refresh the page.
+    window.onload = function () {
+        if (!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
+    }
+
     const ul = document.getElementById('menu');
     if (localStorage.getItem('token') != null) {
-        ul.innerHTML = '<h3>logout...</h3>';
-    }
-    else {
+        validateJWT().then( function (isValid) {
+            console.log(isValid);
+            if(isValid === true) {
+                ul.innerHTML =
+                    '<li>' +
+                    '<form action="/self-authoring/logoutUser" method="post">' +
+                    '<button type="submit" class="dropdown-item" id="logout_button">logout </button> ' +
+                    '</form>' +
+                    '</li>';
+            }
+            else {
+                ul.innerHTML = '<li> <button class="dropdown-item" id="login_button">login (token expired) </button> </li>';
+                const loginButton = document.getElementById('login_button');
+
+                loginButton.addEventListener('click', function () {
+                    loginContainer.classList.remove('d-none');
+                    isLoginPageOpen = true;
+                });
+            }
+        });
+
+    } else {
         ul.innerHTML = '<li> <button class="dropdown-item" id="login_button">login </button> </li>';
+
+        const loginButton = document.getElementById('login_button');
+
+        loginButton.addEventListener('click', function () {
+            loginContainer.classList.remove('d-none');
+            isLoginPageOpen = true;
+        });
     }
 
 
-
-
-
-
-
-    const loginButton = document.getElementById('login_button');
     const loginContainer = document.getElementById('login_view');
     const textArea = document.getElementById('text');
     const registerButton = document.getElementById('register_button');
@@ -89,18 +133,15 @@
 
     let isLoginPageOpen = false;
     let isRegisterPageOpen = false;
-    loginButton.addEventListener('click', function () {
-        loginContainer.classList.remove('d-none');
-        isLoginPageOpen = true;
-    });
+
 
     textArea.addEventListener('click', function () {
-       if (isLoginPageOpen || isRegisterPageOpen) {
-           loginContainer.classList.add('d-none');
-           registerContainer.classList.add('d-none');
-           isLoginPageOpen = false;
-           isRegisterPageOpen = false;
-       }
+        if (isLoginPageOpen || isRegisterPageOpen) {
+            loginContainer.classList.add('d-none');
+            registerContainer.classList.add('d-none');
+            isLoginPageOpen = false;
+            isRegisterPageOpen = false;
+        }
     });
 
     registerButton.addEventListener('click', function () {
@@ -109,14 +150,12 @@
     });
 
 
-    <?php if (isset($token)): ?>
-    localStorage.setItem('token', '<?php echo $token ?>');
+    <?php if (isset($attributes['token'])): ?>
+    localStorage.setItem('token', '<?php echo $attributes['token'] ?>');
     <?php endif; ?>
-    <?php if (isset($logout)): ?>
+    <?php if (isset($attributes['logout'])): ?>
     localStorage.clear();
     <?php endif; ?>
-
-
 
 
 </script>
