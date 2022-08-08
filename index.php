@@ -3,6 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 
+use app\controllers\JWTController;
 use app\Router;
 use app\controllers\UserController;
 
@@ -17,7 +18,7 @@ $router
     ->post('/self-authoring/registerUser', [UserController::class, 'registerUser'])
     ->post('/self-authoring/loginUser', [UserController::class, 'loginUser'])
     ->post('/self-authoring/logoutUser', [UserController::class, 'logoutUser'])
-    ->post('/self-authoring/isValidJWT', [UserController::class, 'isValidJWT'])
+    ->post('/self-authoring/isValidJWT', [JWTController::class, 'isValidJWT'])
     ->get('/self-authoring/test', [UserController::class, 'test']);
 
 

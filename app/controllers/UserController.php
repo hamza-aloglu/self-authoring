@@ -2,10 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\JWT;
 use app\View;
 use app\models\User;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 class UserController
 {
@@ -36,11 +35,11 @@ class UserController
             'iss' => 'localhost',
             'aud' => 'localhost',
         ];
-
-        $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], $_ENV['JWT_ALGO']);
+        $jwt = new JWT();
+        $jwtToken = $jwt->create($payload);
 
         // it will save encrypted token in local storage of client.
-        $this->index(['token' => $jwt]);
+        $this->index(['token' => $jwtToken]);
     }
 
     public function logoutUser()
@@ -54,20 +53,5 @@ class UserController
         echo "test...";
     }
 
-    public function isValidJWT()
-    {
-        $jwtToken = json_decode(file_get_contents('php://input', true));
 
-        $secretKey = $_ENV['JWT_SECRET'];
-        $jwtAlgorithm = $_ENV['JWT_ALGO'];
-
-        $isValid = true;
-        try{
-            JWT::decode($jwtToken, new Key($secretKey, $jwtAlgorithm));
-        } catch (\Exception $e) {
-            $isValid = false;
-        }
-
-        echo json_encode($isValid);
-    }
 }
