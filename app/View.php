@@ -13,6 +13,5 @@ class View
         }
 
         include $fullFileName;
-
     }
 }

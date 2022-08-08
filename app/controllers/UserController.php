@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\View;
 use app\models\User;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class UserController
 {
@@ -26,23 +27,19 @@ class UserController
         $email = $_POST['user-email'];
         $password = $_POST['user-password'];
 
-        // find corresponding user by email then check password.
         $user = new User();
         if (!$user->isRegisteredUser($email, $password)) {
             die("not registered");
         }
 
-        // generate token
-        $key = $password;
         $payload = [
             'iss' => 'localhost',
             'aud' => 'localhost',
         ];
 
-        $jwt = JWT::encode($payload, $key, 'HS256');
-        // $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], $_ENV['JWT_ALGO']);
 
-        // save encrypted token in local storage of client.
+        // it will save encrypted token in local storage of client.
         $this->index(['token' => $jwt]);
     }
 
@@ -59,17 +56,18 @@ class UserController
 
     public function isValidJWT()
     {
-        sleep(10);
+        $jwtToken = json_decode(file_get_contents('php://input', true));
 
-        if (empty($_POST)) {
-            $_POST = json_decode(file_get_contents('php://input', true));
+        $secretKey = $_ENV['JWT_SECRET'];
+        $jwtAlgorithm = $_ENV['JWT_ALGO'];
+
+        $isValid = true;
+        try{
+            JWT::decode($jwtToken, new Key($secretKey, $jwtAlgorithm));
+        } catch (\Exception $e) {
+            $isValid = false;
         }
 
-        // decode jwt
-        // check if it is valid
-        // response true or false.
-
-
-        echo json_encode($_POST);
+        echo json_encode($isValid);
     }
 }

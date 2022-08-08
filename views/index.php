@@ -69,6 +69,8 @@
 
 
 <script>
+
+
     async function validateJWT()
     {
         const userToken = localStorage.getItem('token');
@@ -82,6 +84,8 @@
         });
         return await response.json();
     }
+
+
 
     // after logging in, there is still login button unless you refresh the page.
     window.onload = function () {
