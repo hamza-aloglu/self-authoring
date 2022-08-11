@@ -18,6 +18,7 @@ class JWT extends Model
         $this->jwtAlgo = $_ENV['JWT_ALGO'];
     }
 
+
     public function create(array $payload): string
     {
         return JWTfirebase::encode($payload, $this->secretKey, $this->jwtAlgo);

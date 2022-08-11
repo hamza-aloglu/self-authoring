@@ -48,6 +48,17 @@
     <!-- REGISTER PAGE -->
     <div class="container centered-axis-xy p-3 d-none" id="register_view">
         <form action="/self-authoring/registerUser" method="post">
+
+            <?php if (isset($isEmailValid)):
+                if (!$isEmailValid):
+                ?>
+
+            <div class="alert alert-danger" role="alert">
+                Please enter a valid e-mail.
+            </div>
+
+            <?php endif; endif; ?>
+
             <div class="mb-3">
                 <label for="reg-name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="reg-name" name="user-name">
@@ -71,6 +82,16 @@
 <script>
 
 
+
+
+    <?php if (isset($token)): ?>
+    localStorage.setItem('token', '<?php echo $token ?>');
+    <?php endif; ?>
+    <?php if (isset($attributes['logout'])): ?>
+    localStorage.clear();
+    <?php endif; ?>
+
+
     async function validateJWT()
     {
         const userToken = localStorage.getItem('token');
@@ -87,13 +108,16 @@
 
 
 
+    /*
     // after logging in, there is still login button unless you refresh the page.
     window.onload = function () {
         if (!window.location.hash) {
+            // window.location.href = "http://localhost/self-authoring/index#loaded";
             window.location = window.location + '#loaded';
             window.location.reload();
         }
     }
+    */
 
     const ul = document.getElementById('menu');
     if (localStorage.getItem('token') != null) {
@@ -133,9 +157,21 @@
     const loginContainer = document.getElementById('login_view');
     const textArea = document.getElementById('text');
     const registerButton = document.getElementById('register_button');
-    const registerContainer = document.getElementById('register_view');
 
+    const registerContainer = document.getElementById('register_view');
     let isLoginPageOpen = false;
+
+    <?php if (isset($isEmailValid)):
+    if (!$isEmailValid):
+    ?>
+    registerContainer.classList.remove('d-none');
+    <?php
+    else: ?>
+    isLoginPageOpen = true;
+    loginContainer.classList.remove('d-none');
+
+    <?php endif; endif; ?>
+
     let isRegisterPageOpen = false;
 
 
@@ -154,12 +190,6 @@
     });
 
 
-    <?php if (isset($attributes['token'])): ?>
-    localStorage.setItem('token', '<?php echo $attributes['token'] ?>');
-    <?php endif; ?>
-    <?php if (isset($attributes['logout'])): ?>
-    localStorage.clear();
-    <?php endif; ?>
 
 
 </script>

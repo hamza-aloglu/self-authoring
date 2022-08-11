@@ -16,9 +16,23 @@ class UserController
     public function registerUser()
     {
         $user = new User();
-        $user->store($_POST['user-name'], $_POST['user-email'], $_POST['user-password']);
+        $userName = $_POST['user-name'];
+        $userEmail = $_POST['user-email'];
+        $userPassword = $_POST['user-password'];
 
-        header('Location: /self-authoring/index');
+        $curlController = new CurlController();
+        $emailState = $curlController->getEmailState($userEmail);
+
+        $isEmailValid = false;
+        if ($emailState === "deliverable") {
+            $isEmailValid = true;
+        }
+
+        if ($isEmailValid) {
+            $user->store($userName, $userEmail, $userPassword);
+        }
+
+        View::make('index', ['isEmailValid' => $isEmailValid]);
     }
 
     public function loginUser()
@@ -39,12 +53,12 @@ class UserController
         $jwtToken = $jwt->create($payload);
 
         // it will save encrypted token in local storage of client.
-        $this->index(['token' => $jwtToken]);
+        View::make('index', ['token' => $jwtToken]);
     }
 
     public function logoutUser()
     {
-        $this->index(['logout' => true]);
+        View::make('index', ['logout' => true]);
     }
 
 
