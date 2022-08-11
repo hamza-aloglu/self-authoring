@@ -21,18 +21,17 @@ class UserController
         $userPassword = $_POST['user-password'];
 
         $curlController = new CurlController();
+
+        // IEmailState $emailState;
         $emailState = $curlController->getEmailState($userEmail);
 
-        $isEmailValid = false;
-        if ($emailState === "deliverable") {
-            $isEmailValid = true;
-        }
+        $isEmailValid = $emailState->isValid();
 
         if ($isEmailValid) {
             $user->store($userName, $userEmail, $userPassword);
         }
 
-        View::make('index', ['isEmailValid' => $isEmailValid]);
+        View::make('index', ['isEmailValid' => $isEmailValid, 'emailValidationMessage' => $emailState]);
     }
 
     public function loginUser()

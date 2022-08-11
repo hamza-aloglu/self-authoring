@@ -51,13 +51,16 @@
 
             <?php if (isset($isEmailValid)):
                 if (!$isEmailValid):
-                ?>
+                    ?>
 
-            <div class="alert alert-danger" role="alert">
-                Please enter a valid e-mail.
-            </div>
+                    <div class="alert alert-danger" role="alert">
+                        <?php if (isset($emailValidationMessage)):
+                            echo $emailValidationMessage;
+                        endif;
+                        ?>
+                    </div>
 
-            <?php endif; endif; ?>
+                <?php endif; endif; ?>
 
             <div class="mb-3">
                 <label for="reg-name" class="form-label">Name</label>
@@ -82,8 +85,6 @@
 <script>
 
 
-
-
     <?php if (isset($token)): ?>
     localStorage.setItem('token', '<?php echo $token ?>');
     <?php endif; ?>
@@ -92,8 +93,7 @@
     <?php endif; ?>
 
 
-    async function validateJWT()
-    {
+    async function validateJWT() {
         const userToken = localStorage.getItem('token');
 
         let response = await fetch('http://localhost/self-authoring/isValidJWT', {
@@ -105,7 +105,6 @@
         });
         return await response.json();
     }
-
 
 
     /*
@@ -121,17 +120,16 @@
 
     const ul = document.getElementById('menu');
     if (localStorage.getItem('token') != null) {
-        validateJWT().then( function (isValid) {
+        validateJWT().then(function (isValid) {
             console.log(isValid);
-            if(isValid === true) {
+            if (isValid === true) {
                 ul.innerHTML =
                     '<li>' +
                     '<form action="/self-authoring/logoutUser" method="post">' +
                     '<button type="submit" class="dropdown-item" id="logout_button">logout </button> ' +
                     '</form>' +
                     '</li>';
-            }
-            else {
+            } else {
                 ul.innerHTML = '<li> <button class="dropdown-item" id="login_button">login (token expired) </button> </li>';
                 const loginButton = document.getElementById('login_button');
 
@@ -188,8 +186,6 @@
         registerContainer.classList.remove('d-none');
         isRegisterPageOpen = true;
     });
-
-
 
 
 </script>
