@@ -82,113 +82,18 @@
 </div>
 
 
+<?php require 'services/tokenAdjustment.php'?>
 <script>
 
+    <?php require 'services/validateJWT.js'?>
 
-    <?php if (isset($token)): ?>
-    localStorage.setItem('token', '<?php echo $token ?>');
-    <?php endif; ?>
-    <?php if (isset($attributes['logout'])): ?>
-    localStorage.clear();
-    <?php endif; ?>
-
-
-    async function validateJWT() {
-        const userToken = localStorage.getItem('token');
-
-        let response = await fetch('http://localhost/self-authoring/isValidJWT', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(userToken)
-        });
-        return await response.json();
-    }
-
-
-    /*
-    // after logging in, there is still login button unless you refresh the page.
-    window.onload = function () {
-        if (!window.location.hash) {
-            // window.location.href = "http://localhost/self-authoring/index#loaded";
-            window.location = window.location + '#loaded';
-            window.location.reload();
-        }
-    }
-    */
-
-    const ul = document.getElementById('menu');
-    if (localStorage.getItem('token') != null) {
-        validateJWT().then(function (isValid) {
-            console.log(isValid);
-            if (isValid === true) {
-                ul.innerHTML =
-                    '<li>' +
-                    '<form action="/self-authoring/logoutUser" method="post">' +
-                    '<button type="submit" class="dropdown-item" id="logout_button">logout </button> ' +
-                    '</form>' +
-                    '</li>';
-            } else {
-                ul.innerHTML = '<li> <button class="dropdown-item" id="login_button">login (token expired) </button> </li>';
-                const loginButton = document.getElementById('login_button');
-
-                loginButton.addEventListener('click', function () {
-                    loginContainer.classList.remove('d-none');
-                    isLoginPageOpen = true;
-                });
-            }
-        });
-
-    } else {
-        ul.innerHTML = '<li> <button class="dropdown-item" id="login_button">login </button> </li>';
-
-        const loginButton = document.getElementById('login_button');
-
-        loginButton.addEventListener('click', function () {
-            loginContainer.classList.remove('d-none');
-            isLoginPageOpen = true;
-        });
-    }
-
-
-    const loginContainer = document.getElementById('login_view');
-    const textArea = document.getElementById('text');
-    const registerButton = document.getElementById('register_button');
-
-    const registerContainer = document.getElementById('register_view');
-    let isLoginPageOpen = false;
-
-    <?php if (isset($isEmailValid)):
-    if (!$isEmailValid):
-    ?>
-    registerContainer.classList.remove('d-none');
-    <?php
-    else: ?>
-    isLoginPageOpen = true;
-    loginContainer.classList.remove('d-none');
-
-    <?php endif; endif; ?>
-
-    let isRegisterPageOpen = false;
-
-
-    textArea.addEventListener('click', function () {
-        if (isLoginPageOpen || isRegisterPageOpen) {
-            loginContainer.classList.add('d-none');
-            registerContainer.classList.add('d-none');
-            isLoginPageOpen = false;
-            isRegisterPageOpen = false;
-        }
-    });
-
-    registerButton.addEventListener('click', function () {
-        registerContainer.classList.remove('d-none');
-        isRegisterPageOpen = true;
-    });
-
+    <?php require 'services/dynamicMenuContent.js'?>
 
 </script>
+<?php require 'services/dynamicRegister-Login.php'?>
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

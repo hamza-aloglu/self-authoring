@@ -6,6 +6,9 @@ use app\Model;
 
 class User extends Model
 {
+    // For making data and behaviour together (for encapsulation) we can put "email, password, name" properties in
+    // constructor. We should put multiple constructors, so we can use this model in different places.
+
     public function getAll(): bool|array
     {
         return $this->db->query('SELECT * FROM users')->fetchAll();
