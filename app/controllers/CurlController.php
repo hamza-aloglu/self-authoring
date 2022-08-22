@@ -31,7 +31,7 @@ class CurlController
     {
         $params = [
             'email' => $email,
-            'api_key' => $_ENV['EMAILLABLE_KEY']
+            'api_key' => $_ENV['EMAILLABLE_KEY'],
         ];
 
         $url = 'https://api.emailable.com/v1/verify?' . http_build_query($params);

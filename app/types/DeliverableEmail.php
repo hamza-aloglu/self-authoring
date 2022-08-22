@@ -6,6 +6,7 @@ use app\interfaces\IEmailState;
 
 class DeliverableEmail implements IEmailState
 {
+
     public function isValid(): bool
     {
         return true;

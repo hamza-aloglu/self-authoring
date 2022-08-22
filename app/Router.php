@@ -22,14 +22,14 @@ class Router
         return $this->register('post', $url, $action);
     }
 
-    public function run(string $requestURI, string $requestMethod)
+    public function resolve(string $requestURI, string $requestMethod)
     {
         $requestMethod = strtolower($requestMethod);
         $url = explode("?", $requestURI)[0];
         if (isset($this->routes[$requestMethod][$url])) {
             $action = $this->routes[$requestMethod][$url];
             if (is_callable($action)) {
-               return call_user_func($action);
+                return call_user_func($action);
             }
 
             if (is_array($action)) {

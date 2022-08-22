@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\controllers;
 
 use app\models\JWT;
@@ -8,12 +10,13 @@ use app\models\User;
 
 class UserController
 {
-    public function index(array $attributes = null)
+
+    public function index(array $attributes = null): View
     {
-        View::make('index', ['attributes' => $attributes]);
+        return View::make('index', ['attributes' => $attributes]);
     }
 
-    public function registerUser()
+    public function registerUser(): View
     {
         $user = new User();
         $userName = $_POST['user-name'];
@@ -21,20 +24,18 @@ class UserController
         $userPassword = $_POST['user-password'];
 
         $curlController = new CurlController();
-
         // IEmailState $emailState;
         $emailState = $curlController->getEmailState($userEmail);
 
         $isEmailValid = $emailState->isValid();
-
         if ($isEmailValid) {
             $user->store($userName, $userEmail, $userPassword);
         }
 
-        View::make('index', ['isEmailValid' => $isEmailValid, 'emailValidationMessage' => $emailState]);
+        return View::make('index', ['isEmailValid' => $isEmailValid, 'emailValidationMessage' => $emailState]);
     }
 
-    public function loginUser()
+    public function loginUser(): View
     {
         $email = $_POST['user-email'];
         $password = $_POST['user-password'];
@@ -52,12 +53,12 @@ class UserController
         $jwtToken = $jwt->create($payload);
 
         // it will save encrypted token in local storage of client.
-        View::make('index', ['token' => $jwtToken]);
+        return View::make('index', ['token' => $jwtToken]);
     }
 
-    public function logoutUser()
+    public function logoutUser(): View
     {
-        View::make('index', ['logout' => true]);
+        return View::make('index', ['logout' => true]);
     }
 
 

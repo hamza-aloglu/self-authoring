@@ -2,13 +2,12 @@
 
 namespace app;
 
-class Model extends Database {
-    protected \PDO $db;
+abstract class Model {
+    protected Database $db;
 
     public function __construct()
     {
-        parent::__construct();
-        $this->db = $this->getDB();
+        $this->db = App::db();
     }
 
 }

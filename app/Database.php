@@ -4,20 +4,36 @@ namespace app;
 
 use PDO;
 
+/**
+ * @mixin PDO
+ */
 class Database
 {
-    private PDO $db;
+    private PDO $pdo;
 
-    public function __construct()
+    public function __construct(array $config)
     {
-        $this->db = new PDO("mysql:host=localhost;dbname=self-authoring", "root");
-        // set the PDO error mode to exception
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $defaultOptions = [
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ];
+
+        try {
+            $this->pdo = new PDO(
+                $config['driver'] . ':host=' . $config['host'] . ';dbname=' . $config['database'],
+                $config['user'],
+                $config['pass'],
+                $config['options'] ?? $defaultOptions
+            );
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int) $e->getCode());
+        }
     }
 
-    public function getDB(): PDO
+    // for calling pdo's functions such as $pdo->query() from models. In my case, $db->query() in models.
+    public function __call(string $name, array $arguments)
     {
-        return $this->db;
+        return call_user_func_array([$this->pdo, $name], $arguments);
     }
 
 }

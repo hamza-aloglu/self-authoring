@@ -9,6 +9,9 @@ class User extends Model
     // For making data and behaviour together (for encapsulation) we can put "email, password, name" properties in
     // constructor. We should put multiple constructors, so we can use this model in different places.
 
+    // multiple constructor yaparsak bazı fonksiyonları kullanırken acaba bu constructorla bu fonksiyon kullanılabilir mi
+    // diye düşünüp sürekli User'ın içini kontrol edeceğiz ki bizim engellemeye çalıştığımız şey bu.
+
     public function getAll(): bool|array
     {
         return $this->db->query('SELECT * FROM users')->fetchAll();
