@@ -2,9 +2,11 @@
 
 namespace app;
 
+use app\exceptions\RouteNotFoundException;
+
 class Router
 {
-    public array $routes;
+    public array $routes = [];
 
     public function register(string $reqMethod, string $url, callable|array $action): self
     {
@@ -22,28 +24,35 @@ class Router
         return $this->register('post', $url, $action);
     }
 
+    public function routes(): array
+    {
+        return $this->routes;
+    }
+
     public function resolve(string $requestURI, string $requestMethod)
     {
         $requestMethod = strtolower($requestMethod);
         $url = explode("?", $requestURI)[0];
-        if (isset($this->routes[$requestMethod][$url])) {
-            $action = $this->routes[$requestMethod][$url];
-            if (is_callable($action)) {
-                return call_user_func($action);
-            }
 
-            if (is_array($action)) {
-                [$class, $method] = $action;
+        $action = $this->routes[$requestMethod][$url] ?? null;
+        if (!$action) {
+            throw new RouteNotFoundException();
+        }
+        if (is_callable($action)) {
+            return call_user_func($action);
+        }
 
-                if (class_exists($class)) {
-                    $class = new $class();
+        if (is_array($action)) {
+            [$class, $method] = $action;
 
-                    if (method_exists($class, $method)) {
-                        return call_user_func_array([$class, $method], []);
-                    }
+            if (class_exists($class)) {
+                $class = new $class();
+
+                if (method_exists($class, $method)) {
+                    return call_user_func_array([$class, $method], []);
                 }
             }
         }
-        echo "404";
+        throw new RouteNotFoundException();
     }
 }

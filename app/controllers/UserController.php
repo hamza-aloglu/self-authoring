@@ -52,7 +52,7 @@ class UserController
         $jwt = new JWT();
         $jwtToken = $jwt->create($payload);
 
-        // it will save encrypted token in local storage of client.
+        // it will save encrypted token in local storage of client since token variable is sent.
         return View::make('index', ['token' => $jwtToken]);
     }
 
