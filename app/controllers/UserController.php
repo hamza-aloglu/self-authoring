@@ -11,6 +11,7 @@ use app\models\User;
 class UserController
 {
 
+    // This should move to HomeController. This has nothing to do with User.
     public function index(array $attributes = null): View
     {
         return View::make('index', ['attributes' => $attributes]);
@@ -24,6 +25,7 @@ class UserController
         $userPassword = $_POST['user-password'];
 
         $curlController = new CurlController();
+
         // IEmailState $emailState;
         $emailState = $curlController->getEmailState($userEmail);
 
@@ -41,7 +43,7 @@ class UserController
         $password = $_POST['user-password'];
 
         $user = new User();
-        if (!$user->isRegisteredUser($email, $password)) {
+        if (!$user->isRegistered($email, $password)) {
             die("not registered");
         }
 
