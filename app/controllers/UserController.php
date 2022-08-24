@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
+use app\attributes\Route;
 use app\models\JWT;
 use app\View;
 use app\models\User;
@@ -12,11 +13,13 @@ class UserController
 {
 
     // This should move to HomeController. This has nothing to do with User.
-    public function index(array $attributes = null): View
+    #[Route('get', '/self-authoring/index', )]
+    public function index(): View
     {
-        return View::make('index', ['attributes' => $attributes]);
+        return View::make('index');
     }
 
+    #[Route('post', '/self-authoring/registerUser')]
     public function registerUser(): View
     {
         $user = new User();
@@ -37,6 +40,7 @@ class UserController
         return View::make('index', ['isEmailValid' => $isEmailValid, 'emailValidationMessage' => $emailState]);
     }
 
+    #[Route('post', '/self-authoring/loginUser')]
     public function loginUser(): View
     {
         $email = $_POST['user-email'];
@@ -58,6 +62,7 @@ class UserController
         return View::make('index', ['token' => $jwtToken]);
     }
 
+    #[Route('post', '/self-authoring/logoutUser')]
     public function logoutUser(): View
     {
         return View::make('index', ['logout' => true]);

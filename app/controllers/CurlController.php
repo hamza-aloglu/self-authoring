@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
+use app\attributes\Route;
 use app\interfaces\IEmailState;
 use app\types\DeliverableEmail;
 use app\types\RiskyEmail;
@@ -12,6 +13,7 @@ use app\types\UnknownEmail;
 
 class CurlController
 {
+    #[Route('get', '/self-authoring/curl')]
     public function getEmailState(string $email): IEmailState
     {
         $result = $this->fetchFromEmaillableAPI($email);
