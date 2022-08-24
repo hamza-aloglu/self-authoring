@@ -15,7 +15,7 @@ const VIEW_PATH = __DIR__ . '/views';
 
 $router = new Router();
 
-$router->registerRoutesFromControllersViaAttributes(
+$router->registerRoutesFromControllersViaMethodAttributes(
     [
         UserController::class,
         JWTController::class,

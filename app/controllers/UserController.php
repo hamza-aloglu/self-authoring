@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\attributes\Route;
+use app\attributes\Get;
+use app\attributes\Post;
 use app\models\JWT;
 use app\View;
 use app\models\User;
@@ -13,13 +14,13 @@ class UserController
 {
 
     // This should move to HomeController. This has nothing to do with User.
-    #[Route('get', '/self-authoring/index', )]
+    #[Get('/self-authoring/index')]
     public function index(): View
     {
         return View::make('index');
     }
 
-    #[Route('post', '/self-authoring/registerUser')]
+    #[Post('/self-authoring/registerUser')]
     public function registerUser(): View
     {
         $user = new User();
@@ -40,7 +41,7 @@ class UserController
         return View::make('index', ['isEmailValid' => $isEmailValid, 'emailValidationMessage' => $emailState]);
     }
 
-    #[Route('post', '/self-authoring/loginUser')]
+    #[Post('/self-authoring/loginUser')]
     public function loginUser(): View
     {
         $email = $_POST['user-email'];
@@ -60,9 +61,10 @@ class UserController
 
         // it will save encrypted token in local storage of client since token variable is sent.
         return View::make('index', ['token' => $jwtToken]);
+
     }
 
-    #[Route('post', '/self-authoring/logoutUser')]
+    #[Post('/self-authoring/logoutUser')]
     public function logoutUser(): View
     {
         return View::make('index', ['logout' => true]);

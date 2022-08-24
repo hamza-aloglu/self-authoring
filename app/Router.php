@@ -10,13 +10,13 @@ class Router
 {
     public array $routes = [];
 
-    public function registerRoutesFromControllersViaAttributes(array $controllers)
+    public function registerRoutesFromControllersViaMethodAttributes(array $controllers)
     {
         foreach ($controllers as $controller) {
             $reflectionController = new ReflectionClass($controller);
 
             foreach ($reflectionController->getMethods() as $method) {
-                $attributeClasses = $method->getAttributes(Route::class);
+                $attributeClasses = $method->getAttributes(Route::class, \ReflectionAttribute::IS_INSTANCEOF);
 
                 foreach ($attributeClasses as $attributeClass) {
                     $instanceAttributeClass = $attributeClass->newInstance();
