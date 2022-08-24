@@ -21,7 +21,7 @@ class Router
                 foreach ($attributeClasses as $attributeClass) {
                     $instanceAttributeClass = $attributeClass->newInstance();
 
-                    $this->register($instanceAttributeClass->reqMethod, $instanceAttributeClass->url, [$controller, $method->getName()]);
+                    $this->register($instanceAttributeClass->reqMethod->value, $instanceAttributeClass->url, [$controller, $method->getName()]);
                 }
             }
         }
