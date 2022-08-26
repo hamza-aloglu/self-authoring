@@ -2,7 +2,8 @@
 
 namespace app;
 
-abstract class Model {
+abstract class Model
+{
     protected Database $db;
 
     public function __construct()

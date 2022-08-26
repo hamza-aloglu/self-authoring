@@ -23,7 +23,7 @@ class User extends Model
         $stmt->bindValue("password", $password);
 
         // if such a user exists returns true, otherwise false.
-        return (bool) count($stmt->executeQuery()->fetchAllAssociative());
+        return (bool)count($stmt->executeQuery()->fetchAllAssociative());
     }
 
     public function store(string $name, string $email, string $password)

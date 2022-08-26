@@ -18,7 +18,7 @@ class Database
         try {
             $this->connection = DriverManager::getConnection($config);
         } catch (Exception $e) {
-            throw new \PDOException($e->getMessage(), (int) $e->getCode());
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 

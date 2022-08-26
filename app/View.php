@@ -19,11 +19,11 @@ class View
     {
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';
 
-        if (! file_exists($viewPath)) {
+        if (!file_exists($viewPath)) {
             throw new ViewNotFoundException();
         }
 
-        foreach($this->params as $key => $value) {
+        foreach ($this->params as $key => $value) {
             $$key = $value;
         }
 
@@ -32,7 +32,7 @@ class View
 
         include $viewPath;
 
-        return (string) ob_get_clean();
+        return (string)ob_get_clean();
     }
 
     // since render method will be called if View object is returned, controllers return type is View if they are disp-
