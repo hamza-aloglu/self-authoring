@@ -48,6 +48,7 @@ class UserController
         $password = $_POST['user-password'];
 
         $user = new User();
+
         if (!$user->isRegistered($email, $password)) {
             die("not registered");
         }

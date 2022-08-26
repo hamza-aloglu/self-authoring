@@ -6,7 +6,7 @@ use app\enums\HttpRequests;
 use Attribute;
 
 #[Attribute]
-class Route
+abstract class Route
 {
     public function __construct(public HttpRequests $reqMethod, public string $url)
     {
