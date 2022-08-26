@@ -8,7 +8,7 @@ use app\attributes\Get;
 use app\attributes\Post;
 use app\models\JWT;
 use app\View;
-use app\models\User;
+use app\models\UserModel;
 
 class UserController
 {
@@ -23,7 +23,7 @@ class UserController
     #[Post('/self-authoring/registerUser')]
     public function registerUser(): View
     {
-        $user = new User();
+        $user = new UserModel();
         $userName = $_POST['user-name'];
         $userEmail = $_POST['user-email'];
         $userPassword = $_POST['user-password'];
@@ -47,7 +47,7 @@ class UserController
         $email = $_POST['user-email'];
         $password = $_POST['user-password'];
 
-        $user = new User();
+        $user = new UserModel();
 
         if (!$user->isRegistered($email, $password)) {
             die("not registered");

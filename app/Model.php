@@ -4,11 +4,11 @@ namespace app;
 
 abstract class Model
 {
-    protected Database $db;
+    protected Database $em;
 
     public function __construct()
     {
-        $this->db = App::db();
+        $this->em = App::em();
     }
 
 }

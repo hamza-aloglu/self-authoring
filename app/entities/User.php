@@ -17,7 +17,7 @@ class User
 {
     #[Id]
     #[Column, GeneratedValue]
-    private int $id;
+    protected int $id;
 
     #[Column]
     private string $name;
@@ -34,6 +34,24 @@ class User
     public function __construct()
     {
         $this->texts = new ArrayCollection();
+    }
+
+    public function __get(string $name)
+    {
+        return $this->{$name};
+    }
+    public function __set(string $name, $value): void
+    {
+        $this->{$name} = $value;
+    }
+
+    public function create(string $name, string $email, string $password): self
+    {
+        $this->name = $name;
+        $this->email = $email;
+        $this->password = $password;
+
+        return $this;
     }
 
     public function addText(Text $text)
