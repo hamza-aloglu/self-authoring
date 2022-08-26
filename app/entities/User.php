@@ -2,10 +2,13 @@
 
 namespace app\entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
@@ -24,4 +27,19 @@ class User
 
     #[Column]
     private string $password;
+
+    #[OneToMany(mappedBy: 'invoice', targetEntity: Text::class, cascade: ['persist', 'remove'])]
+    private Collection $texts;
+
+    public function __construct()
+    {
+        $this->texts = new ArrayCollection();
+    }
+
+    public function addText(Text $text)
+    {
+        $text->setUser($this);
+
+        $this->texts->add($text);
+    }
 }
