@@ -8,6 +8,7 @@ if (localStorage.getItem('token') != null) {
                 '<form action="/self-authoring/logoutUser" method="post">' +
                 '<button type="submit" class="dropdown-item" id="logout_button">logout </button> ' +
                 '</form>' +
+                '<button type="submit" form="create_text" class="dropdown-item" id="logout_button">save text </button> ' +
                 '</li>';
         } else {
             ul.innerHTML = '<li> <button class="dropdown-item" id="login_button">login (token expired) </button> </li>';

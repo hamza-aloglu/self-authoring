@@ -31,9 +31,12 @@ class Text
     #[ManyToOne(inversedBy: 'texts')]
     private User $user;
 
-
-    public function setUser(User $user): void
+    public function create(?string $writing, User $user): self
     {
+        $this->writing = $writing;
         $this->user = $user;
+        $this->createdAt = new \DateTime('now');
+        return $this;
     }
+
 }

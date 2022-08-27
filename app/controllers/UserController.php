@@ -53,15 +53,15 @@ class UserController
             die("not registered");
         }
 
-        $payload = [
-            'iss' => 'localhost',
-            'aud' => 'localhost',
-        ];
+        $uid = $user->getId($email);
+
+        var_dump($uid);
+
         $jwt = new JWT();
-        $jwtToken = $jwt->create($payload);
+        $jwtToken = $jwt->create();
 
         // it will save encrypted token in local storage of client since token variable is sent.
-        return View::make('index', ['token' => $jwtToken]);
+        return View::make('index', ['token' => $jwtToken, 'uid' => $uid]);
 
     }
 

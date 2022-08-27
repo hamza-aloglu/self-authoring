@@ -6,6 +6,7 @@ use app\App;
 use app\Config;
 use app\controllers\CurlController;
 use app\controllers\JWTController;
+use app\controllers\TextController;
 use app\Router;
 use app\controllers\UserController;
 
@@ -20,6 +21,7 @@ $router->registerRoutesFromControllersViaMethodAttributes(
         UserController::class,
         JWTController::class,
         CurlController::class,
+        TextController::class
     ]
 );
 

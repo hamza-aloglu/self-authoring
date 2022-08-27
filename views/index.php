@@ -15,18 +15,20 @@
 
 
 <div class="form-floating h-100" id="container">
-    <textarea class="form-control bg-light h-100" id="text"></textarea>
+    <form action="/self-authoring/createText" method="post" id="create_text" style="all: unset">
+        <textarea class="form-control bg-light h-100" id="text" name="writing"></textarea>
+        <input type="number" value="" hidden name="uid" id="uid">
+    </form>
 
-    <!-- 3 DOTS DROPDOWN -->
-    <div class="dropdown bg-light" id="dropdown">
-        <button class="btn btn-secondary bg-light text-dark" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
-        </button>
-        <ul class="dropdown-menu" id="menu">
-        </ul>
-    </div>
-
+        <!-- 3 DOTS DROPDOWN -->
+        <div class="dropdown bg-light" id="dropdown">
+            <button class="btn btn-secondary bg-light text-dark" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <ul class="dropdown-menu" id="menu">
+            </ul>
+        </div>
     <!-- LOGIN PAGE -->
     <div class="container centered-axis-xy p-3 d-none" id="login_view">
         <form action="/self-authoring/loginUser" method="post">
@@ -88,6 +90,8 @@
     <?php require 'services/validateJWT.js'?>
 
     <?php require 'services/dynamicMenuContent.js'?>
+
+    <?php require 'services/setUidValue.js' ?>
 
 </script>
 <?php require 'services/dynamicRegister-Login.php' ?>

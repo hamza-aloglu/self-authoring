@@ -28,4 +28,11 @@ class UserModel extends Model
         $this->em->persist($user);
         $this->em->flush();
     }
+
+    public function getId(string $email): int
+    {
+        $stmt = $this->em->createQuery('SELECT u.id FROM app\entities\User u WHERE u.email = :email');
+        $stmt->setParameter('email', $email);
+        return ($stmt->getResult()[0]['id']);
+    }
 }

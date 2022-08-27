@@ -19,8 +19,13 @@ class JWT extends Model
     }
 
 
-    public function create(array $payload): string
+    public function create(): string
     {
+        $payload = [
+            'iss' => 'localhost',
+            'aud' => 'localhost',
+        ];
+
         return JWTfirebase::encode($payload, $this->secretKey, $this->jwtAlgo);
     }
 

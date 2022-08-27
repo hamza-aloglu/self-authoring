@@ -28,8 +28,9 @@ class User
     #[Column]
     private string $password;
 
-    #[OneToMany(mappedBy: 'invoice', targetEntity: Text::class, cascade: ['persist', 'remove'])]
+    #[OneToMany(mappedBy: 'user', targetEntity: Text::class, cascade: ['persist', 'remove'])]
     private Collection $texts;
+
 
     public function __construct()
     {
@@ -40,6 +41,7 @@ class User
     {
         return $this->{$name};
     }
+
     public function __set(string $name, $value): void
     {
         $this->{$name} = $value;
@@ -52,12 +54,5 @@ class User
         $this->password = $password;
 
         return $this;
-    }
-
-    public function addText(Text $text)
-    {
-        $text->setUser($this);
-
-        $this->texts->add($text);
     }
 }
