@@ -27,7 +27,7 @@ html, body {
     border: none;
 }
 
-#login_view, #register_view {
+#login_view, #register_view, #writing_view {
     box-shadow: 0px 0px 1000px 100px grey !important;
     border-radius: 5px;
     background-color: lightgray;

@@ -5,6 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use app\App;
 use app\Config;
 use app\controllers\CurlController;
+use app\controllers\HomeController;
 use app\controllers\JWTController;
 use app\controllers\TextController;
 use app\Router;
@@ -18,6 +19,7 @@ $router = new Router();
 
 $router->registerRoutesFromControllersViaMethodAttributes(
     [
+        HomeController::class,
         UserController::class,
         JWTController::class,
         CurlController::class,

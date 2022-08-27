@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\attributes\Get;
 use app\attributes\Post;
 use app\models\JWT;
 use app\View;
@@ -12,14 +11,6 @@ use app\models\UserModel;
 
 class UserController
 {
-
-    // This should move to HomeController. This has nothing to do with User.
-    #[Get('/self-authoring/index')]
-    public function index(): View
-    {
-        return View::make('index');
-    }
-
     #[Post('/self-authoring/registerUser')]
     public function registerUser(): View
     {

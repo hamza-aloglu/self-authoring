@@ -12,23 +12,36 @@
     </style>
 </head>
 <body>
-
-
 <div class="form-floating h-100" id="container">
+
+    <!-- TEXT AREA -->
     <form action="/self-authoring/createText" method="post" id="create_text" style="all: unset">
         <textarea class="form-control bg-light h-100" id="text" name="writing"></textarea>
         <input type="number" value="" hidden name="uid" id="uid">
     </form>
 
-        <!-- 3 DOTS DROPDOWN -->
-        <div class="dropdown bg-light" id="dropdown">
-            <button class="btn btn-secondary bg-light text-dark" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-            <ul class="dropdown-menu" id="menu">
-            </ul>
-        </div>
+    <!-- 3 DOTS DROPDOWN -->
+    <div class="dropdown bg-light" id="dropdown">
+        <button class="btn btn-secondary bg-light text-dark" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+
+        <ul class="dropdown-menu" id="menu">
+            <!--
+              Eğer user loginlenmişse bu buton gözükecek,
+              bu butona tıklanınca writing view gözükecek,
+              writing viewin içinde user textleri olacak
+                    -> user loginlendiği zaman butonun visible olması.
+                    -> butona clicklenince writing view gözükmesi
+                    -> butona clicklenince serverdan response döndürmesi
+                    -> bu serverdan responseun userın textleri olması
+                    -> bu textleri düzgün bir biçimde gösterme
+                        => texte tıklanınca contentin sayfamda gözükmesi.
+            -->
+        </ul>
+    </div>
+
     <!-- LOGIN PAGE -->
     <div class="container centered-axis-xy p-3 d-none" id="login_view">
         <form action="/self-authoring/loginUser" method="post">
@@ -80,21 +93,33 @@
         </form>
     </div>
 
+    <!-- WRITINGS PAGE -->
+    <div class="container centered-axis-xy p-3 d-none" id="writing_view">
+        <h3>Hello World.</h3>
+    </div>
 
 </div>
-
 
 <?php require 'services/tokenAdjustment.php' ?>
 <script>
 
+    <?php require 'services/fetchWritingsOfUser.js' ?>
+
     <?php require 'services/validateJWT.js'?>
 
-    <?php require 'services/dynamicMenuContent.js'?>
 
+</script>
+
+<?php require 'services/dynamicMenuContent.php' ?>
+
+<script>
     <?php require 'services/setUidValue.js' ?>
 
 </script>
 <?php require 'services/dynamicRegister-Login.php' ?>
+
+<script>
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

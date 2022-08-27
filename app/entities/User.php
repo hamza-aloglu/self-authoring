@@ -32,6 +32,8 @@ class User
     private Collection $texts;
 
 
+
+
     public function __construct()
     {
         $this->texts = new ArrayCollection();
@@ -54,5 +56,10 @@ class User
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getTexts(): ArrayCollection|Collection
+    {
+        return $this->texts;
     }
 }

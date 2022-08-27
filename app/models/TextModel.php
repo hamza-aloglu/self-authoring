@@ -18,4 +18,13 @@ class TextModel extends Model
         $this->em->persist($text);
         $this->em->flush();
     }
+
+    public function fetchTextsOfUser(int $uid)
+    {
+        $user = $this->em->find(User::class, $uid);
+
+        $stmt = $this->em->createQuery('SELECT t FROM app\entities\Text t WHERE t.user = ' . $uid);
+
+        return $stmt->getResult();
+    }
 }
