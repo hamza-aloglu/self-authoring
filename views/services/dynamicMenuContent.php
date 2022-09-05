@@ -1,10 +1,11 @@
 <script>
     const ul = document.getElementById('menu');
+    let isTextsLoaded = false;
 
     const writingsContainer = document.getElementById('writing_view');
     let isWritingsPageOpen = false;
 
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') != null && localStorage.getItem('uid') != null) {
         validateJWT().then(function (isValid) {
             if (isValid === true) {
                 ul.innerHTML =
@@ -18,35 +19,42 @@
 
                 const writingsButton = document.getElementById('writings_button');
                 writingsButton.addEventListener('click', function () {
-                    fetchWritingsOfUser().then(function (texts) {
-                        const idOfTexts = [];
-                        for (const textId in texts) {
-                            idOfTexts.push(textId)
-                        }
+                    if (!isTextsLoaded) {
+                        isTextsLoaded = true;
+                        fetchWritingsOfUser().then(function (texts) {
+                            const idsOfTexts = [];
+                            for (const textId in texts) {
+                                idsOfTexts.push(textId);
+                            }
 
-                        idOfTexts.forEach(function (element, index) {
+                            idsOfTexts.forEach(function (textID) {
 
-                            let lengthOfText = texts[element].length
-                            let datePartStartingIndex = lengthOfText - 10;
+                                let lengthOfText = texts[textID].length;
+                                let datePartStartingIndex = lengthOfText - 10;
 
-                            let textPart = texts[element].slice(0, datePartStartingIndex);
-                            let datePart = texts[element].slice(datePartStartingIndex, lengthOfText);
+                                let textPart = texts[textID].slice(0, datePartStartingIndex);
+                                let datePart = texts[textID].slice(datePartStartingIndex, lengthOfText);
 
 
-                            writingsContainer.innerHTML += '<div class="card shadow my-1">' +
-                                '<div class="row container my-2"> ' +
-                                '<div class="col-12">' +
-                                '<div class="card-body">' +
-                                '<h5 class="card-title"></h5>' +
-                                '<p class="card-text">' + '<button id="saved_text_button' + element + '">' + textPart + '</button>' + '</p>' +
-                                '<p class="card-text">' + '<small class="text-muted">' + datePart + '</small></p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>';
-                            
+                                writingsContainer.innerHTML +=
+                                    '<form action="/self-authoring/getText" method="post">' +
+                                    '<input type="text" hidden name="textID" value="' + textID + '">' +
+                                    '<input type="text" hidden name="userID" value="' + localStorage.getItem('uid') + '">' +
+                                    '<div class="card shadow my-1">' +
+                                    '<div class="row container my-2"> ' +
+                                    '<div class="col-12">' +
+                                    '<div class="card-body">' +
+                                    '<h5 class="card-title"></h5>' +
+                                    '<p class="card-text">' + '<button type="submit"' + textID + '">' + textPart + '</button>' + '</p>' +
+                                    '<p class="card-text">' + '<small class="text-muted">' + datePart + '</small></p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</form>';
+                            });
                         });
-                    });
+                    }
 
                     writingsContainer.classList.remove('d-none');
                     isWritingsPageOpen = true;

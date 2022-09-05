@@ -21,10 +21,17 @@ class TextModel extends Model
 
     public function fetchTextsOfUser(int $uid)
     {
-        $user = $this->em->find(User::class, $uid);
-
+        $this->em->find(User::class, $uid); // without finding user of text, cannot find the text.
         $stmt = $this->em->createQuery('SELECT t FROM app\entities\Text t WHERE t.user = ' . $uid);
-
         return $stmt->getResult();
+    }
+
+    public function fetchText(int $tid, int $uid): string
+    {
+        $this->em->find(User::class, $uid); // without finding user of text, cannot find the text.
+        $stmt = $this->em->createQuery('SELECT t FROM app\entities\Text t WHERE t.id = ' . $tid);
+        $text = $stmt->getResult()[0];
+
+        return $text->writing;
     }
 }

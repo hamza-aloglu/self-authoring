@@ -17,13 +17,10 @@ class Text
 {
     #[Id]
     #[Column, GeneratedValue]
-    private int $id;
+    protected int $id;
 
     #[Column(type: Types::TEXT)]
     private string $writing;
-
-    #[Column(name: 'user_id')]
-    private int $userId;
 
     #[Column(name: 'created_at')]
     private \DateTime $createdAt;

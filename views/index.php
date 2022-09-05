@@ -16,7 +16,13 @@
 
     <!-- TEXT AREA -->
     <form action="/self-authoring/createText" method="post" id="create_text" style="all: unset">
-        <textarea class="form-control bg-light h-100" id="text" name="writing"></textarea>
+        <textarea class="form-control bg-light h-100" id="text" name="writing">
+            <?php
+            if (isset($writing)):
+                echo $writing;
+            endif;
+            ?>
+        </textarea>
         <input type="number" value="" hidden name="uid" id="uid">
     </form>
 
@@ -28,17 +34,7 @@
         </button>
 
         <ul class="dropdown-menu" id="menu">
-            <!--
-              Eğer user loginlenmişse bu buton gözükecek,
-              bu butona tıklanınca writing view gözükecek,
-              writing viewin içinde user textleri olacak
-                    -> user loginlendiği zaman butonun visible olması.
-                    -> butona clicklenince writing view gözükmesi
-                    -> butona clicklenince serverdan response döndürmesi
-                    -> bu serverdan responseun userın textleri olması
-                    -> bu textleri düzgün bir biçimde gösterme
-                        => texte tıklanınca contentin sayfamda gözükmesi.
-            -->
+
         </ul>
     </div>
 
