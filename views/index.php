@@ -90,7 +90,7 @@
     </div>
 
     <!-- WRITINGS PAGE -->
-    <div class="container centered-axis-xy p-3 d-none" id="writing_view">
+    <div class="container centered-axis-xy p-3 d-none overflow-scroll" id="writing_view">
         <h3>Hello World.</h3>
     </div>
 

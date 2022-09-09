@@ -32,8 +32,6 @@ class User
     private Collection $texts;
 
 
-
-
     public function __construct()
     {
         $this->texts = new ArrayCollection();

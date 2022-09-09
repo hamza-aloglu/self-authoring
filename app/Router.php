@@ -34,16 +34,6 @@ class Router
         return $this;
     }
 
-    public function get(string $url, callable|array $action): self
-    {
-        return $this->register('get', $url, $action);
-    }
-
-    public function post(string $url, callable|array $action): self
-    {
-        return $this->register('post', $url, $action);
-    }
-
     public function routes(): array
     {
         return $this->routes;

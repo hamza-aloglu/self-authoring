@@ -1,4 +1,34 @@
 <script>
+    /*
+    async function displayWritings()
+    {
+        const isValid = await validateJWT();
+
+        if (isValid === true) {
+            ul.innerHTML =
+                '<li>' +
+                '<form action="/self-authoring/logoutUser" method="post">' +
+                '<button type="submit" class="dropdown-item" id="logout_button">logout </button> ' +
+                '</form>' +
+                '<button type="submit" form="create_text" class="dropdown-item" id="logout_button">save text </button> ' +
+                '<button class="dropdown-item" id="writings_button">see texts </button> ' +
+                '</li>';
+
+            const writingsButton = document.getElementById('writings_button');
+            writingsButton.addEventListener('click', function () {
+                if (!isTextsLoaded) {
+                    isTextsLoaded = true;
+                    const writings = await fetchWritingsOfUser(); // another async function.
+                }
+            }
+
+    }
+    */
+
+
+
+
+
     const ul = document.getElementById('menu');
     let isTextsLoaded = false;
 
