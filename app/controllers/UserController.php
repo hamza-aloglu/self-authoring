@@ -46,8 +46,6 @@ class UserController
 
         $uid = $user->getId($email);
 
-        var_dump($uid);
-
         $jwt = new JWT();
         $jwtToken = $jwt->create();
 
