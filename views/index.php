@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+
 <div class="form-floating h-100" id="container">
 
     <!-- TEXT AREA -->
@@ -91,12 +92,17 @@
 
     <!-- WRITINGS PAGE -->
     <div class="container centered-axis-xy p-3 d-none overflow-scroll" id="writing_view">
-        <h3>Hello World.</h3>
+        <ul id="list">
+
+        </ul>
     </div>
 
 </div>
 
-<?php require 'services/tokenAdjustment.php' ?>
+
+<?php require 'services/updateToken&Uid.php' ?>
+
+
 <script>
 
     <?php require 'services/fetchWritingsOfUser.js' ?>
@@ -114,8 +120,8 @@
 </script>
 <?php require 'services/dynamicRegister-Login.php' ?>
 
-<script>
-</script>
+<?php require 'IndexedDB.php'?>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

@@ -26,9 +26,6 @@
     */
 
 
-
-
-
     const ul = document.getElementById('menu');
     let isTextsLoaded = false;
 
@@ -86,28 +83,51 @@
                         });
                     }
 
-                    writingsContainer.classList.remove('d-none');
-                    isWritingsPageOpen = true;
+                    const writingsButton = document.getElementById('writings_button');
+                    writingsButton.addEventListener('click', function () {
+                        writingsContainer.classList.remove('d-none');
+                        isWritingsPageOpen = true;
+                    });
+
+
                 });
             } else {
-                ul.innerHTML += '<li> <button class="dropdown-item" id="login_button">login (token expired) </button> </li>';
+                ul.innerHTML +=
+                    '<li> <button class="dropdown-item" id="login_button">login (token expired) </button> </li>'
+                    + '<button type="submit" form="create_text" class="dropdown-item" id="logout_button">save to browser </button> '
+                    + '<button class="dropdown-item" id="writings_button">see texts </button> ';
                 const loginButton = document.getElementById('login_button');
 
                 loginButton.addEventListener('click', function () {
                     loginContainer.classList.remove('d-none');
                     isLoginPageOpen = true;
                 });
+
+                const writingsButton = document.getElementById('writings_button');
+                writingsButton.addEventListener('click', function () {
+                    writingsContainer.classList.remove('d-none');
+                    isWritingsPageOpen = true;
+                });
+
             }
         });
 
     } else {
-        ul.innerHTML += '<li> <button class="dropdown-item" id="login_button">login </button> </li>';
+        ul.innerHTML += '<li> <button class="dropdown-item" id="login_button">login </button> </li>'
+            + '<button type="submit" form="create_text" class="dropdown-item" id="logout_button">save to browser </button> '
+            + '<button class="dropdown-item" id="writings_button">see texts </button> ';
 
         const loginButton = document.getElementById('login_button');
 
         loginButton.addEventListener('click', function () {
             loginContainer.classList.remove('d-none');
             isLoginPageOpen = true;
+        });
+
+        const writingsButton = document.getElementById('writings_button');
+        writingsButton.addEventListener('click', function () {
+            writingsContainer.classList.remove('d-none');
+            isWritingsPageOpen = true;
         });
     }
 
